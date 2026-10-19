@@ -3,47 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PixelCraft Pro - Ultimate Image & PDF Converter Suite</title>
-    <meta name="description" content="All-in-one client-side media suite. Compress images, convert WebP, Word to PDF, and PDF to Image instantly in your browser.">
+    <title>PixelCraft Ultra - Image & PDF Suite</title>
+    <meta name="description" content="Fast, secure client-side image compressor, WebP converter and utility suite.">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- JSZip for Batch Download -->
+    <!-- JSZip -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <!-- jsPDF for PDF Creation -->
+    <!-- jsPDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- Mammoth.js for Word Parsing -->
+    <!-- Mammoth for Word (.docx) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
-    <!-- PDF.js for Rendering PDF to Canvas -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-    <script>
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: { 50: '#eff6ff', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' }
-                    }
-                }
-            }
-        }
-    </script>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans min-h-screen flex flex-col antialiased">
 
     <!-- Header Navbar -->
-    <header class="border-b border-slate-200 bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-xs">
+    <header class="border-b border-slate-200 bg-white/90 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center font-black text-white text-xl shadow-md shadow-blue-500/20">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center font-black text-white text-xl shadow-md">
                     PS
                 </div>
                 <span class="text-xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                    PixelCraft <span class="text-[10px] uppercase px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-700 font-extrabold tracking-wide">ULTRA</span>
+                    PixelCraft <span class="text-[10px] uppercase px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-700 font-extrabold">ULTRA</span>
                 </span>
             </div>
-            <span class="inline-flex items-center text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-full shadow-2xs">
+            <span class="inline-flex items-center text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-full">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>
-                100% Client-Side Engine
+                Secure Client-Side
             </span>
         </div>
     </header>
@@ -51,13 +37,12 @@
     <!-- Main Container -->
     <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <!-- Left Main Tool Area (8 Cols) -->
+        <!-- Left Main Tool Area -->
         <section class="lg:col-span-8 space-y-6">
             
-            <!-- Hero Title -->
             <div class="space-y-2 text-center sm:text-left">
-                <h1 class="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">Image, Word & PDF Utility Suite</h1>
-                <p class="text-sm text-slate-600">Compress photos, convert formats, and generate PDFs instantly without uploading files to any server.</p>
+                <h1 class="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">Image & Document Utility Suite</h1>
+                <p class="text-sm text-slate-600">Compress photos, convert formats, and generate PDFs instantly in your browser.</p>
             </div>
 
             <!-- Tool Switcher Tabs -->
@@ -68,15 +53,11 @@
                 <button onclick="switchTab('word')" id="tab-word" class="flex-1 py-3 px-4 rounded-xl text-xs font-black transition text-slate-600 hover:text-slate-900">
                     📄 Word to PDF
                 </button>
-                <button onclick="switchTab('pdf')" id="tab-pdf" class="flex-1 py-3 px-4 rounded-xl text-xs font-black transition text-slate-600 hover:text-slate-900">
-                    📸 PDF to Image
-                </button>
             </div>
 
             <!---------------- TAB 1: IMAGE TOOLS ---------------->
             <div id="section-image" class="space-y-6">
                 
-                <!-- Stats Bar -->
                 <div class="grid grid-cols-3 gap-3 bg-white border border-slate-200 rounded-2xl p-4 shadow-xs text-center sm:text-left">
                     <div>
                         <p class="text-[10px] text-slate-400 font-bold uppercase">Files</p>
@@ -92,35 +73,35 @@
                     </div>
                 </div>
 
-                <!-- Fixed Upload Box -->
-                <div class="relative bg-white border-3 border-dashed border-blue-300 hover:border-blue-500 transition rounded-3xl p-8 text-center shadow-lg shadow-blue-500/5">
+                <!-- Upload Box -->
+                <div id="drop-zone-img" class="bg-white border-3 border-dashed border-blue-300 hover:border-blue-500 transition rounded-3xl p-8 text-center shadow-lg shadow-blue-500/5 cursor-pointer">
                     <input type="file" id="image-input" accept="image/*" multiple class="hidden">
-                    <label for="image-input" class="cursor-pointer space-y-4 block">
+                    <div class="space-y-4 pointer-events-none">
                         <div class="w-16 h-16 mx-auto rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center shadow-inner">
                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         </div>
                         <div>
-                            <p class="text-base font-extrabold text-slate-800">Drag & drop images here</p>
-                            <span class="inline-block mt-3 bg-blue-600 hover:bg-blue-700 text-white text-xs font-extrabold px-6 py-2.5 rounded-xl shadow-md transition">
-                                Browse Files
+                            <p class="text-base font-extrabold text-slate-800">Tap or Drop images here</p>
+                            <span class="inline-block mt-3 bg-blue-600 text-white text-xs font-extrabold px-6 py-2.5 rounded-xl shadow-md">
+                                Browse Photos
                             </span>
-                            <p class="text-[11px] text-slate-400 mt-2">Supports PNG, JPG, WebP, SVG, GIF</p>
+                            <p class="text-[11px] text-slate-400 mt-2">Supports PNG, JPG, WebP</p>
                         </div>
-                    </label>
+                    </div>
                 </div>
 
                 <!-- Controls Section -->
                 <div id="controls-section" class="hidden bg-white border border-slate-200 rounded-3xl p-6 space-y-6 shadow-xs">
                     <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-                        <h3 class="font-extrabold text-slate-800">⚙️ Processing Settings</h3>
+                        <h3 class="font-extrabold text-slate-800">⚙️ Settings</h3>
                         <button id="reset-btn" class="text-xs font-bold text-rose-500 hover:underline">Clear All</button>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold uppercase text-slate-500 mb-2">Target Format</label>
                             <select id="global-format" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs font-bold text-slate-700 outline-none">
-                                <option value="image/webp">WebP (Best Quality & Speed)</option>
+                                <option value="image/webp">WebP (Best Quality)</option>
                                 <option value="image/jpeg">JPEG / JPG</option>
                                 <option value="image/png">PNG</option>
                             </select>
@@ -132,18 +113,14 @@
                             </div>
                             <input type="range" id="global-quality" min="10" max="100" value="80" class="w-full accent-blue-600 cursor-pointer">
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold uppercase text-slate-500 mb-2">Max Width (px)</label>
-                            <input type="number" id="global-max-width" placeholder="Original Size" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 outline-none">
-                        </div>
                     </div>
 
                     <div class="pt-2 flex flex-col sm:flex-row gap-3">
-                        <button id="download-zip-btn" class="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black py-3.5 px-6 rounded-2xl shadow-md hover:opacity-90 transition text-xs uppercase tracking-wider">
+                        <button id="download-zip-btn" class="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black py-3 px-6 rounded-xl shadow-md transition text-xs uppercase">
                             Download All (ZIP)
                         </button>
-                        <button id="images-to-pdf-btn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3.5 px-6 rounded-2xl shadow-md transition text-xs uppercase tracking-wider">
-                            Convert Images to PDF
+                        <button id="images-to-pdf-btn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 px-6 rounded-xl shadow-md transition text-xs uppercase">
+                            Convert to PDF
                         </button>
                     </div>
                 </div>
@@ -156,24 +133,23 @@
             <div id="section-word" class="hidden space-y-6">
                 <div class="bg-white border border-slate-200 rounded-3xl p-8 space-y-6 shadow-xs">
                     <div class="text-center space-y-2">
-                        <h3 class="text-xl font-black text-slate-900">Word (.docx) to PDF Engine</h3>
+                        <h3 class="text-xl font-black text-slate-900">Word (.docx) to PDF</h3>
                         <p class="text-xs text-slate-500">Transform Microsoft Word documents into clean PDF files instantly.</p>
                     </div>
 
-                    <!-- Fixed Word Input -->
-                    <div class="border-3 border-dashed border-indigo-200 hover:border-indigo-500 transition rounded-3xl p-8 text-center bg-indigo-50/30">
+                    <div id="drop-zone-word" class="border-3 border-dashed border-indigo-200 hover:border-indigo-500 transition rounded-3xl p-8 text-center bg-indigo-50/30 cursor-pointer">
                         <input type="file" id="word-input" accept=".docx" class="hidden">
-                        <label for="word-input" class="cursor-pointer space-y-4 block">
+                        <div class="space-y-4 pointer-events-none">
                             <div class="w-16 h-16 mx-auto rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center">
                                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                             </div>
                             <div>
-                                <p class="text-base font-extrabold text-slate-800">Select Word (.docx) Document</p>
-                                <span class="inline-block mt-3 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold px-6 py-2.5 rounded-xl shadow-md transition">
+                                <p class="text-base font-extrabold text-slate-800">Tap to select Word document</p>
+                                <span class="inline-block mt-3 bg-indigo-600 text-white text-xs font-extrabold px-6 py-2.5 rounded-xl shadow-md">
                                     Choose .docx File
                                 </span>
                             </div>
-                        </label>
+                        </div>
                     </div>
 
                     <div id="word-action-box" class="hidden bg-slate-50 p-5 rounded-2xl border border-slate-200 flex items-center justify-between gap-4">
@@ -181,58 +157,21 @@
                             <p id="word-file-name" class="text-sm font-bold text-slate-800">document.docx</p>
                             <p class="text-xs text-slate-400">File loaded successfully</p>
                         </div>
-                        <button id="convert-word-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl text-xs uppercase shadow-md transition">
-                            Convert & Download PDF
+                        <button id="convert-word-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs uppercase shadow-md transition">
+                            Convert PDF
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!---------------- TAB 3: PDF TO IMAGE ---------------->
-            <div id="section-pdf" class="hidden space-y-6">
-                <div class="bg-white border border-slate-200 rounded-3xl p-8 space-y-6 shadow-xs">
-                    <div class="text-center space-y-2">
-                        <h3 class="text-xl font-black text-slate-900">PDF to Image Converter</h3>
-                        <p class="text-xs text-slate-500">Extract PDF pages into individual high-resolution PNG photos.</p>
-                    </div>
-
-                    <div class="border-3 border-dashed border-rose-200 hover:border-rose-500 transition rounded-3xl p-8 text-center bg-rose-50/30">
-                        <input type="file" id="pdf-input" accept="application/pdf" class="hidden">
-                        <label for="pdf-input" class="cursor-pointer space-y-4 block">
-                            <div class="w-16 h-16 mx-auto rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center">
-                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                            </div>
-                            <div>
-                                <p class="text-base font-extrabold text-slate-800">Select PDF File</p>
-                                <span class="inline-block mt-3 bg-rose-600 hover:bg-rose-700 text-white text-xs font-extrabold px-6 py-2.5 rounded-xl shadow-md transition">
-                                    Choose PDF
-                                </span>
-                            </div>
-                        </label>
-                    </div>
-
-                    <div id="pdf-output-box" class="space-y-4"></div>
-                </div>
-            </div>
-
         </section>
 
-        <!-- Right Sidebar (4 Cols) -->
+        <!-- Right Sidebar -->
         <aside class="lg:col-span-4 space-y-6">
             <div class="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-6 text-white shadow-xl space-y-4">
                 <span class="text-[10px] bg-white/20 px-3 py-1 rounded-full font-bold uppercase">Fast & Secure</span>
                 <h4 class="text-xl font-black">PixelCraft Ultra</h4>
                 <p class="text-xs text-blue-100 leading-relaxed">All operations run locally in browser RAM memory. Zero tracking, zero server uploads, 100% privacy.</p>
-            </div>
-
-            <div class="bg-white border border-slate-200 rounded-3xl p-6 space-y-3 shadow-xs">
-                <h4 class="font-extrabold text-sm text-slate-800">Supported Utilities</h4>
-                <ul class="space-y-2 text-xs text-slate-600 font-medium">
-                    <li class="flex items-center gap-2"><span class="text-emerald-500 font-bold">✔</span> WebP / PNG / JPG Batch Compressor</li>
-                    <li class="flex items-center gap-2"><span class="text-emerald-500 font-bold">✔</span> Word (.docx) to PDF Transformation</li>
-                    <li class="flex items-center gap-2"><span class="text-emerald-500 font-bold">✔</span> PDF Page Extractor to Image</li>
-                    <li class="flex items-center gap-2"><span class="text-emerald-500 font-bold">✔</span> Bulk Image to Combined PDF</li>
-                </ul>
             </div>
         </aside>
     </main>
@@ -242,36 +181,45 @@
         <p>&copy; 2026 PixelCraft Ultra Suite. All rights reserved.</p>
     </footer>
 
-    <!-- Logic Script -->
+    <!-- Safe & Robust Script -->
     <script>
-        // Tab Switcher
         function switchTab(tab) {
-            const tabs = ['image', 'word', 'pdf'];
+            const tabs = ['image', 'word'];
             tabs.forEach(t => {
-                document.getElementById(`section-${t}`).classList.add('hidden');
-                document.getElementById(`tab-${t}`).className = "flex-1 py-3 px-4 rounded-xl text-xs font-black transition text-slate-600 hover:text-slate-900";
+                const sec = document.getElementById(`section-${t}`);
+                const tb = document.getElementById(`tab-${t}`);
+                if (sec) sec.classList.add('hidden');
+                if (tb) tb.className = "flex-1 py-3 px-4 rounded-xl text-xs font-black transition text-slate-600 hover:text-slate-900";
             });
-            document.getElementById(`section-${tab}`).classList.remove('hidden');
-            document.getElementById(`tab-${tab}`).className = "flex-1 py-3 px-4 rounded-xl text-xs font-black transition bg-white text-blue-600 shadow-xs";
+            const activeSec = document.getElementById(`section-${tab}`);
+            const activeTab = document.getElementById(`tab-${tab}`);
+            if (activeSec) activeSec.classList.remove('hidden');
+            if (activeTab) activeTab.className = "flex-1 py-3 px-4 rounded-xl text-xs font-black transition bg-white text-blue-600 shadow-xs";
         }
 
-        // Image Engine
-        const imageInput = document.getElementById('image-input');
-        const controlsSection = document.getElementById('controls-section');
-        const fileQueue = document.getElementById('file-queue');
-        const globalFormat = document.getElementById('global-format');
-        const globalQuality = document.getElementById('global-quality');
-        const qualityVal = document.getElementById('quality-val');
-        const globalMaxWidth = document.getElementById('global-max-width');
-        const downloadZipBtn = document.getElementById('download-zip-btn');
-        const imagesToPdfBtn = document.getElementById('images-to-pdf-btn');
-        const resetBtn = document.getElementById('reset-btn');
-        const statCount = document.getElementById('stat-count');
-        const statSaved = document.getElementById('stat-saved');
+        // Safe Click Triggers
+        const dropImg = document.getElementById('drop-zone-img');
+        const imgInput = document.getElementById('image-input');
+        if (dropImg && imgInput) {
+            dropImg.addEventListener('click', () => imgInput.click());
+        }
+
+        const dropWord = document.getElementById('drop-zone-word');
+        const wordInput = document.getElementById('word-input');
+        if (dropWord && wordInput) {
+            dropWord.addEventListener('click', () => wordInput.click());
+        }
+
+        // Image Engine Safe Handling
+        if (imgInput) {
+            imgInput.addEventListener('change', (e) => {
+                if (e.target.files && e.target.files.length > 0) {
+                    handleFiles(Array.from(e.target.files));
+                }
+            });
+        }
 
         let queue = [];
-
-        imageInput.addEventListener('change', (e) => handleFiles(Array.from(e.target.files)));
 
         function handleFiles(files) {
             const validFiles = files.filter(f => f.type.startsWith('image/'));
@@ -283,28 +231,44 @@
                 queue.push({ id, file, previewUrl, processedBlob: null, processedName: '' });
             });
 
-            controlsSection.classList.remove('hidden');
+            const controlsSec = document.getElementById('controls-section');
+            if (controlsSec) controlsSec.classList.remove('hidden');
             renderQueue();
             processBatch();
         }
 
-        globalQuality.addEventListener('input', () => {
-            qualityVal.textContent = globalQuality.value + '%';
-            processBatch();
-        });
-        globalFormat.addEventListener('change', processBatch);
-        globalMaxWidth.addEventListener('input', processBatch);
+        const globalQuality = document.getElementById('global-quality');
+        const qualityVal = document.getElementById('quality-val');
+        if (globalQuality) {
+            globalQuality.addEventListener('input', () => {
+                if (qualityVal) qualityVal.textContent = globalQuality.value + '%';
+                processBatch();
+            });
+        }
 
-        resetBtn.addEventListener('click', () => {
-            queue = [];
-            fileQueue.innerHTML = '';
-            controlsSection.classList.add('hidden');
-            updateStats();
-        });
+        const globalFormat = document.getElementById('global-format');
+        if (globalFormat) globalFormat.addEventListener('change', processBatch);
+
+        const resetBtn = document.getElementById('reset-btn');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                queue = [];
+                const fQueue = document.getElementById('file-queue');
+                if (fQueue) fQueue.innerHTML = '';
+                const controlsSec = document.getElementById('controls-section');
+                if (controlsSec) controlsSec.classList.add('hidden');
+                updateStats();
+            });
+        }
 
         function renderQueue() {
-            statCount.textContent = queue.length;
-            fileQueue.innerHTML = queue.map(item => `
+            const statCount = document.getElementById('stat-count');
+            if (statCount) statCount.textContent = queue.length;
+            
+            const fQueue = document.getElementById('file-queue');
+            if (!fQueue) return;
+
+            fQueue.innerHTML = queue.map(item => `
                 <div class="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
                     <div class="flex items-center space-x-3.5 w-full sm:w-auto">
                         <img src="${item.previewUrl}" class="w-12 h-12 object-cover rounded-xl border border-slate-200 bg-slate-50 flex-shrink-0" alt="Thumb">
@@ -315,4 +279,75 @@
                     </div>
                     <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-3">
                         <div class="text-right">
-                            <p id="size-${item.id}" cla
+                            <p id="size-${item.id}" class="text-xs font-black text-emerald-600">Processing...</p>
+                        </div>
+                        <a id="btn-${item.id}" class="opacity-50 pointer-events-none bg-slate-100 text-slate-400 text-xs font-bold px-4 py-2 rounded-xl transition">Download</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function processBatch() {
+            const format = globalFormat ? globalFormat.value : 'image/webp';
+            const quality = globalQuality ? parseFloat(globalQuality.value) / 100 : 0.8;
+
+            for (let item of queue) {
+                const processed = await processSingleImage(item.file, format, quality);
+                item.processedBlob = processed.blob;
+                item.processedName = processed.name;
+
+                const sizeEl = document.getElementById(`size-${item.id}`);
+                const btnEl = document.getElementById(`btn-${item.id}`);
+
+                if (sizeEl && btnEl) {
+                    const savings = Math.round(((item.file.size - processed.blob.size) / item.file.size) * 100);
+                    sizeEl.textContent = `${formatBytes(processed.blob.size)} (-${Math.max(0, savings)}%)`;
+                    btnEl.href = URL.createObjectURL(processed.blob);
+                    btnEl.download = processed.name;
+                    btnEl.classList.remove('opacity-50', 'pointer-events-none', 'bg-slate-100', 'text-slate-400');
+                    btnEl.classList.add('bg-blue-600', 'text-white');
+                }
+            }
+            updateStats();
+        }
+
+        function processSingleImage(file, format, quality) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    img.src = e.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        ctx.drawImage(img, 0, 0);
+                        canvas.toBlob((blob) => {
+                            const ext = format.split('/')[1];
+                            const baseName = file.name.substring(0, file.name.lastIndexOf('.'));
+                            resolve({ blob, name: `${baseName}-converted.${ext}` });
+                        }, format, quality);
+                    };
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function updateStats() {
+            const statCount = document.getElementById('stat-count');
+            const statSaved = document.getElementById('stat-saved');
+            if (statCount) statCount.textContent = queue.length;
+            let totalSaved = queue.reduce((acc, item) => acc + (item.processedBlob ? Math.max(0, item.file.size - item.processedBlob.size) : 0), 0);
+            if (statSaved) statSaved.textContent = formatBytes(totalSaved);
+        }
+
+        const downloadZipBtn = document.getElementById('download-zip-btn');
+        if (downloadZipBtn) {
+            downloadZipBtn.addEventListener('click', async () => {
+                if (!queue.length) return;
+                const zip = new JSZip();
+                queue.forEach(item => { if (item.processedBlob) zip.file(item.processedName, item.processedBlob); });
+                const content = await zip.generateAsync({ type: 'blob' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(
