@@ -1,233 +1,350 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fast Image Resizer, Compressor & Converter | WebP Tool</title>
-    <meta name="description" content="Free online tool to resize, compress, and convert PNG, JPG, WebP images instantly in your browser without uploading to any server.">
-    <!-- Tailwind CSS via CDN -->
+    <title>ImageSwift Pro - Batch Image Compressor, Resizer & Converter</title>
+    <meta name="description" content="Professional, fast, and secure client-side image processing tool. Convert PNG, JPG, WebP, SVG, resize and compress multiple images directly in your browser.">
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- JSZip for Batch Download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased">
 
-    <!-- Navbar -->
-    <header class="border-b border-slate-800 bg-slate-950/50 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-            <h1 class="text-xl font-bold bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
-                ImageSwift AI
-            </h1>
-            <span class="text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/20 font-medium">
-                ⚡ 100% Client-Side Processing
-            </span>
+    <!-- Header Navbar -->
+    <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-teal-400 flex items-center justify-center font-black text-white text-lg shadow-lg shadow-blue-500/20">
+                    IS
+                </div>
+                <span class="text-xl font-bold bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+                    ImageSwift <span class="text-xs px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-semibold">PRO</span>
+                </span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="hidden sm:inline-flex items-center text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full font-medium">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-2 animate-pulse"></span>
+                    100% Secure Client-Side Engine
+                </span>
+            </div>
         </div>
     </header>
 
-    <main class="flex-1 max-w-4xl mx-auto px-4 py-8 w-full">
-        <!-- Hero Section -->
-        <div class="text-center mb-8">
-            <h2 class="text-3xl md:text-4xl font-extrabold mb-3">Convert, Resize & Compress Images</h2>
-            <p class="text-slate-400 text-sm md:text-base">Fast, secure, and privacy-focused. Your images never leave your browser.</p>
-        </div>
-
-        <!-- Ad Placeholder Top -->
-        <div class="w-full h-20 bg-slate-800/40 border border-slate-800 rounded-lg flex items-center justify-center text-xs text-slate-500 mb-8">
-            AdSense Banner Placeholder (Top)
-        </div>
-
-        <!-- Main Card -->
-        <div class="bg-slate-800/50 border border-slate-700/60 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left/Center Main Tool Area (8 Cols) -->
+        <section class="lg:col-span-8 space-y-6">
             
-            <!-- Upload Area -->
-            <div id="drop-zone" class="border-2 border-dashed border-slate-600 hover:border-blue-500 transition-colors rounded-xl p-8 text-center cursor-pointer bg-slate-900/40">
-                <input type="file" id="image-input" accept="image/*" class="hidden">
-                <div class="space-y-3">
-                    <svg class="mx-auto h-12 w-12 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                    </svg>
-                    <div class="text-slate-200 font-medium">Drag & Drop image here or <span class="text-blue-400 underline">Browse</span></div>
-                    <p class="text-xs text-slate-500">Supports PNG, JPG, WebP, SVG</p>
+            <!-- Hero Description -->
+            <div class="text-center sm:text-left space-y-2">
+                <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Bulk Image Compressor, Resizer & Converter</h1>
+                <p class="text-sm text-slate-400">Process unlimited images with zero server uploads. Lightning fast & completely private.</p>
+            </div>
+
+            <!-- AdSense Top Banner Placeholder -->
+            <div class="w-full h-20 bg-slate-900/40 border border-slate-800 rounded-xl flex items-center justify-center text-xs text-slate-600 tracking-wider uppercase font-semibold">
+                Advertisement Area (Header Banner)
+            </div>
+
+            <!-- Upload Box -->
+            <div id="drop-zone" class="relative group border-2 border-dashed border-slate-700 hover:border-blue-500 transition-all duration-200 rounded-2xl p-8 text-center cursor-pointer bg-slate-900/30 hover:bg-slate-900/60 shadow-inner">
+                <input type="file" id="image-input" accept="image/*" multiple class="hidden">
+                <div class="space-y-4">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-base font-semibold text-slate-200">Drag & drop your images here or <span class="text-blue-400 underline">Browse Files</span></p>
+                        <p class="text-xs text-slate-500 mt-1">Batch process PNG, JPG, WebP, SVG, and GIF</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Editor Section (Initially Hidden) -->
-            <div id="editor-section" class="hidden mt-6 space-y-6">
-                
-                <!-- Image Controls Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-700/60">
-                    
-                    <!-- Control 1: Output Format -->
+            <!-- Global Controls Section -->
+            <div id="controls-section" class="hidden bg-slate-900/80 border border-slate-800 rounded-2xl p-6 space-y-6 backdrop-blur">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                    <h3 class="font-bold text-slate-200 flex items-center gap-2">
+                        <span>⚙️ Batch Processing Settings</span>
+                    </h3>
+                    <button id="reset-btn" class="text-xs text-rose-400 hover:underline">Clear All</button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Format Selection -->
                     <div>
-                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Target Format</label>
-                        <select id="format-select" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
-                            <option value="image/webp">WebP (Best Compression)</option>
+                        <label class="block text-xs font-semibold uppercase text-slate-400 tracking-wider mb-2">Target Format</label>
+                        <select id="global-format" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm font-medium focus:border-blue-500 outline-none transition">
+                            <option value="image/webp">WebP (Recommended)</option>
                             <option value="image/jpeg">JPEG / JPG</option>
                             <option value="image/png">PNG</option>
                         </select>
                     </div>
 
-                    <!-- Control 2: Quality Slider -->
+                    <!-- Compression Quality -->
                     <div>
                         <div class="flex justify-between items-center mb-2">
-                            <label class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Quality</label>
-                            <span id="quality-val" class="text-xs font-mono text-blue-400">80%</span>
+                            <label class="text-xs font-semibold uppercase text-slate-400 tracking-wider">Quality</label>
+                            <span id="quality-val" class="text-xs font-mono font-bold text-blue-400">80%</span>
                         </div>
-                        <input type="range" id="quality-range" min="10" max="100" value="80" class="w-full accent-blue-500 cursor-pointer">
+                        <input type="range" id="global-quality" min="10" max="100" value="80" class="w-full accent-blue-500 cursor-pointer">
                     </div>
 
-                    <!-- Control 3: Dimensions -->
+                    <!-- Max Dimension Resizing -->
                     <div>
-                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Width (px)</label>
-                        <input type="number" id="width-input" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Height (px)</label>
-                        <input type="number" id="height-input" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                        <label class="block text-xs font-semibold uppercase text-slate-400 tracking-wider mb-2">Max Width (px)</label>
+                        <input type="number" id="global-max-width" placeholder="Original Size" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm focus:border-blue-500 outline-none">
                     </div>
                 </div>
 
-                <!-- Preview Area -->
-                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/50 flex flex-col md:flex-row items-center justify-between gap-4">
-                    <div class="flex items-center space-x-4">
-                        <img id="preview-img" class="h-20 w-20 object-cover rounded-lg border border-slate-700 bg-slate-950" src="" alt="Preview">
-                        <div>
-                            <p class="text-sm font-medium text-slate-200" id="file-name">image.png</p>
-                            <p class="text-xs text-slate-400 mt-1">
-                                Original: <span id="original-size" class="text-slate-300">0 KB</span> | 
-                                New: <span id="new-size" class="text-emerald-400 font-bold">Calculating...</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Action Button -->
-                    <a id="download-btn" class="w-full md:w-auto text-center bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-2.5 rounded-lg transition-colors cursor-pointer text-sm shadow-lg shadow-blue-600/20">
-                        Download Image
-                    </a>
+                <!-- Process & Batch Download Button -->
+                <div class="pt-2 flex flex-col sm:flex-row gap-3">
+                    <button id="download-zip-btn" class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg shadow-blue-600/20 flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        <span>Download All as ZIP</span>
+                    </button>
                 </div>
-
             </div>
 
-        </div>
+            <!-- Queue Item Preview List -->
+            <div id="file-queue" class="space-y-3"></div>
 
-        <!-- Ad Placeholder Bottom -->
-        <div class="w-full h-24 bg-slate-800/40 border border-slate-800 rounded-lg flex items-center justify-center text-xs text-slate-500 mt-8">
-            AdSense Banner Placeholder (Bottom)
-        </div>
+        </section>
+
+        <!-- Right Sidebar (4 Cols) - AdSense & Info -->
+        <aside class="lg:col-span-4 space-y-6">
+            
+            <!-- AdSense Sidebar Banner -->
+            <div class="w-full h-80 bg-slate-900/40 border border-slate-800 rounded-2xl flex flex-col items-center justify-center text-xs text-slate-600 tracking-wider uppercase font-semibold p-4 text-center">
+                <span>Sidebar Advertisement</span>
+                <span class="text-[10px] text-slate-700 mt-2">AdSense Responsive Slot</span>
+            </div>
+
+            <!-- Key Features Widget -->
+            <div class="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-5 space-y-4">
+                <h4 class="font-bold text-sm text-slate-200">Why use ImageSwift?</h4>
+                <ul class="space-y-2.5 text-xs text-slate-400">
+                    <li class="flex items-start gap-2">
+                        <span class="text-emerald-400">✔</span>
+                        <span><strong>Zero Quality Loss:</strong> Advanced WebP & MozJPEG encoding logic.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-emerald-400">✔</span>
+                        <span><strong>Privacy Guaranteed:</strong> Images process locally inside your browser memory.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-emerald-400">✔</span>
+                        <span><strong>Batch Conversion:</strong> Convert hundreds of photos in seconds.</span>
+                    </li>
+                </ul>
+            </div>
+
+        </aside>
     </main>
 
+    <!-- SEO & Content Section for AdSense Approval -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-800/60 mt-12 w-full text-slate-400 text-sm">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <h3 class="text-slate-200 font-bold mb-2">How to Convert Images to WebP?</h3>
+                <p class="text-xs leading-relaxed">Drag your PNG or JPG images into the upload area, select 'WebP' as target format, adjust quality settings, and click 'Download All as ZIP'.</p>
+            </div>
+            <div>
+                <h3 class="text-slate-200 font-bold mb-2">Client-Side Compression</h3>
+                <p class="text-xs leading-relaxed">Unlike traditional tools, ImageSwift uses HTML5 Canvas APIs directly inside your browser so your images are never sent to external servers.</p>
+            </div>
+            <div>
+                <h3 class="text-slate-200 font-bold mb-2">Supported Formats</h3>
+                <p class="text-xs leading-relaxed">Convert seamlessly between WebP, PNG, JPEG, SVG, and GIF formats while retaining transparency and color balance.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500">
-        <p>&copy; 2026 ImageSwift. All rights processed locally in your browser.</p>
+    <footer class="border-t border-slate-800/80 bg-slate-950 py-6 text-center text-xs text-slate-500">
+        <p>&copy; 2026 ImageSwift Pro. All rights reserved. Built for ultra performance.</p>
     </footer>
 
-    <!-- Logic Script -->
+    <!-- Logic Engine Script -->
     <script>
         const dropZone = document.getElementById('drop-zone');
         const imageInput = document.getElementById('image-input');
-        const editorSection = document.getElementById('editor-section');
-        const previewImg = document.getElementById('preview-img');
-        const formatSelect = document.getElementById('format-select');
-        const qualityRange = document.getElementById('quality-range');
+        const controlsSection = document.getElementById('controls-section');
+        const fileQueue = document.getElementById('file-queue');
+        const globalFormat = document.getElementById('global-format');
+        const globalQuality = document.getElementById('global-quality');
         const qualityVal = document.getElementById('quality-val');
-        const widthInput = document.getElementById('width-input');
-        const heightInput = document.getElementById('height-input');
-        const fileNameText = document.getElementById('file-name');
-        const originalSizeText = document.getElementById('original-size');
-        const newSizeText = document.getElementById('new-size');
-        const downloadBtn = document.getElementById('download-btn');
+        const globalMaxWidth = document.getElementById('global-max-width');
+        const downloadZipBtn = document.getElementById('download-zip-btn');
+        const resetBtn = document.getElementById('reset-btn');
 
-        let rawImage = new Image();
-        let originalFile = null;
-        let originalAspectRatio = 1;
+        let queue = [];
 
-        // Trigger file select
         dropZone.addEventListener('click', () => imageInput.click());
+        imageInput.addEventListener('change', (e) => handleFiles(Array.from(e.target.files)));
 
-        // File upload handling
-        imageInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
         dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('border-blue-500'); });
         dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-blue-500'));
         dropZone.addEventListener('drop', (e) => {
             e.preventDefault();
             dropZone.classList.remove('border-blue-500');
-            if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+            if (e.dataTransfer.files.length) handleFiles(Array.from(e.dataTransfer.files));
         });
 
-        function handleFile(file) {
-            if (!file || !file.type.startsWith('image/')) return;
-            originalFile = file;
-            fileNameText.textContent = file.name;
-            originalSizeText.textContent = formatBytes(file.size);
+        function handleFiles(files) {
+            const validFiles = files.filter(f => f.type.startsWith('image/'));
+            if (!validFiles.length) return;
 
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                rawImage.src = e.target.result;
-                rawImage.onload = () => {
-                    originalAspectRatio = rawImage.width / rawImage.height;
-                    widthInput.value = rawImage.width;
-                    heightInput.value = rawImage.height;
-                    editorSection.classList.remove('hidden');
-                    processImage();
+            validFiles.forEach(file => {
+                const id = Math.random().toString(36).substring(2, 9);
+                queue.push({ id, file, processedBlob: null, processedName: '' });
+            });
+
+            controlsSection.classList.remove('hidden');
+            renderQueue();
+            processBatch();
+        }
+
+        globalQuality.addEventListener('input', () => {
+            qualityVal.textContent = globalQuality.value + '%';
+            processBatch();
+        });
+        globalFormat.addEventListener('change', processBatch);
+        globalMaxWidth.addEventListener('input', processBatch);
+
+        resetBtn.addEventListener('click', () => {
+            queue = [];
+            fileQueue.innerHTML = '';
+            controlsSection.classList.add('hidden');
+        });
+
+        function renderQueue() {
+            fileQueue.innerHTML = queue.map(item => `
+                <div id="item-${item.id}" class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center space-x-3 w-full sm:w-auto">
+                        <div class="w-12 h-12 bg-slate-950 rounded-lg border border-slate-800 overflow-hidden flex-shrink-0 flex items-center justify-center text-xs text-slate-600">
+                            <span>Image</span>
+                        </div>
+                        <div class="truncate">
+                            <p class="text-sm font-medium text-slate-200 truncate max-w-[200px]">${item.file.name}</p>
+                            <p class="text-xs text-slate-500">Original: ${formatBytes(item.file.size)}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4">
+                        <div class="text-right">
+                            <p class="text-xs text-slate-400">Compressed</p>
+                            <p id="size-${item.id}" class="text-sm font-bold text-emerald-400">Processing...</p>
+                        </div>
+                        <a id="btn-${item.id}" class="opacity-50 pointer-events-none bg-slate-800 text-xs font-semibold px-4 py-2 rounded-lg transition hover:bg-blue-600 hover:text-white">
+                            Download
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function processBatch() {
+            const format = globalFormat.value;
+            const quality = parseFloat(globalQuality.value) / 100;
+            const maxWidth = parseInt(globalMaxWidth.value) || null;
+
+            for (let item of queue) {
+                const processed = await processSingleImage(item.file, format, quality, maxWidth);
+                item.processedBlob = processed.blob;
+                item.processedName = processed.name;
+
+                // Update UI item
+                const sizeEl = document.getElementById(`size-${item.id}`);
+                const btnEl = document.getElementById(`btn-${item.id}`);
+
+                if (sizeEl && btnEl) {
+                    const savings = Math.round(((item.file.size - processed.blob.size) / item.file.size) * 100);
+                    const savingsText = savings > 0 ? `(-${savings}%)` : '';
+                    sizeEl.textContent = `${formatBytes(processed.blob.size)} ${savingsText}`;
+
+                    const url = URL.createObjectURL(processed.blob);
+                    btnEl.href = url;
+                    btnEl.download = processed.name;
+                    btnEl.classList.remove('opacity-50', 'pointer-events-none', 'bg-slate-800');
+                    btnEl.classList.add('bg-blue-600', 'text-white');
+                }
+            }
+        }
+
+        function processSingleImage(file, format, quality, maxWidth) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    img.src = e.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (maxWidth && width > maxWidth) {
+                            height = Math.round((maxWidth / width) * height);
+                            width = maxWidth;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        canvas.toBlob((blob) => {
+                            const ext = format.split('/')[1];
+                            const baseName = file.name.substring(0, file.name.lastIndexOf('.'));
+                            resolve({ blob, name: `${baseName}-converted.${ext}` });
+                        }, format, quality);
+                    };
                 };
-            };
-            reader.readAsDataURL(file);
+                reader.readAsDataURL(file);
+            });
         }
 
-        // Maintain aspect ratio logic
-        widthInput.addEventListener('input', () => {
-            if (widthInput.value) heightInput.value = Math.round(widthInput.value / originalAspectRatio);
-            processImage();
+        downloadZipBtn.addEventListener('click', async () => {
+            const zip = new JSZip();
+            queue.forEach(item => {
+                if (item.processedBlob) {
+                    zip.file(item.processedName, item.processedBlob);
+                }
+            });
+
+            const content = await zip.generateAsync({ type: 'blob' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(content);
+            link.download = 'imageswift-compressed-images.zip';
+            link.click();
         });
-        heightInput.addEventListener('input', () => {
-            if (heightInput.value) widthInput.value = Math.round(heightInput.value * originalAspectRatio);
-            processImage();
-        });
-
-        qualityRange.addEventListener('input', () => {
-            qualityVal.textContent = qualityRange.value + '%';
-            processImage();
-        });
-        formatSelect.addEventListener('change', processImage);
-
-        // Canvas conversion core logic
-        function processImage() {
-            if (!rawImage.src) return;
-
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-
-            const targetWidth = parseInt(widthInput.value) || rawImage.width;
-            const targetHeight = parseInt(heightInput.value) || rawImage.height;
-
-            canvas.width = targetWidth;
-            canvas.height = targetHeight;
-
-            ctx.drawImage(rawImage, 0, 0, targetWidth, targetHeight);
-
-            const format = formatSelect.value;
-            const quality = parseFloat(qualityRange.value) / 100;
-
-            canvas.toBlob((blob) => {
-                if (!blob) return;
-                const convertedUrl = URL.createObjectURL(blob);
-                previewImg.src = convertedUrl;
-                newSizeText.textContent = formatBytes(blob.size);
-
-                // Set download link
-                downloadBtn.href = convertedUrl;
-                const extension = format.split('/')[1];
-                const baseName = originalFile.name.substring(0, originalFile.name.lastIndexOf('.'));
-                downloadBtn.download = `${baseName}-converted.${extension}`;
-            }, format, quality);
-        }
 
         function formatBytes(bytes) {
             if (bytes === 0) return '0 Bytes';
             const k = 1024;
             const sizes = ['Bytes', 'KB', 'MB'];
             const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
         }
     </script>
 </body>
-  </html>
-  
+    </html>
+    
