@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast Image Resizer, Compressor & Converter | WebP Tool</title>
+    <meta name="description" content="Free online tool to resize, compress, and convert PNG, JPG, WebP images instantly in your browser without uploading to any server.">
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+
+    <!-- Navbar -->
+    <header class="border-b border-slate-800 bg-slate-950/50 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <h1 class="text-xl font-bold bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
+                ImageSwift AI
+            </h1>
+            <span class="text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/20 font-medium">
+                ⚡ 100% Client-Side Processing
+            </span>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-4xl mx-auto px-4 py-8 w-full">
+        <!-- Hero Section -->
+        <div class="text-center mb-8">
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-3">Convert, Resize & Compress Images</h2>
+            <p class="text-slate-400 text-sm md:text-base">Fast, secure, and privacy-focused. Your images never leave your browser.</p>
+        </div>
+
+        <!-- Ad Placeholder Top -->
+        <div class="w-full h-20 bg-slate-800/40 border border-slate-800 rounded-lg flex items-center justify-center text-xs text-slate-500 mb-8">
+            AdSense Banner Placeholder (Top)
+        </div>
+
+        <!-- Main Card -->
+        <div class="bg-slate-800/50 border border-slate-700/60 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
+            
+            <!-- Upload Area -->
+            <div id="drop-zone" class="border-2 border-dashed border-slate-600 hover:border-blue-500 transition-colors rounded-xl p-8 text-center cursor-pointer bg-slate-900/40">
+                <input type="file" id="image-input" accept="image/*" class="hidden">
+                <div class="space-y-3">
+                    <svg class="mx-auto h-12 w-12 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <div class="text-slate-200 font-medium">Drag & Drop image here or <span class="text-blue-400 underline">Browse</span></div>
+                    <p class="text-xs text-slate-500">Supports PNG, JPG, WebP, SVG</p>
+                </div>
+            </div>
+
+            <!-- Editor Section (Initially Hidden) -->
+            <div id="editor-section" class="hidden mt-6 space-y-6">
+                
+                <!-- Image Controls Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-700/60">
+                    
+                    <!-- Control 1: Output Format -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Target Format</label>
+                        <select id="format-select" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                            <option value="image/webp">WebP (Best Compression)</option>
+                            <option value="image/jpeg">JPEG / JPG</option>
+                            <option value="image/png">PNG</option>
+                        </select>
+                    </div>
+
+                    <!-- Control 2: Quality Slider -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Quality</label>
+                            <span id="quality-val" class="text-xs font-mono text-blue-400">80%</span>
+                        </div>
+                        <input type="range" id="quality-range" min="10" max="100" value="80" class="w-full accent-blue-500 cursor-pointer">
+                    </div>
+
+                    <!-- Control 3: Dimensions -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Width (px)</label>
+                        <input type="number" id="width-input" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Height (px)</label>
+                        <input type="number" id="height-input" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+                </div>
+
+                <!-- Preview Area -->
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/50 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center space-x-4">
+                        <img id="preview-img" class="h-20 w-20 object-cover rounded-lg border border-slate-700 bg-slate-950" src="" alt="Preview">
+                        <div>
+                            <p class="text-sm font-medium text-slate-200" id="file-name">image.png</p>
+                            <p class="text-xs text-slate-400 mt-1">
+                                Original: <span id="original-size" class="text-slate-300">0 KB</span> | 
+                                New: <span id="new-size" class="text-emerald-400 font-bold">Calculating...</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Action Button -->
+                    <a id="download-btn" class="w-full md:w-auto text-center bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-2.5 rounded-lg transition-colors cursor-pointer text-sm shadow-lg shadow-blue-600/20">
+                        Download Image
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Ad Placeholder Bottom -->
+        <div class="w-full h-24 bg-slate-800/40 border border-slate-800 rounded-lg flex items-center justify-center text-xs text-slate-500 mt-8">
+            AdSense Banner Placeholder (Bottom)
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+        <p>&copy; 2026 ImageSwift. All rights processed locally in your browser.</p>
+    </footer>
+
+    <!-- Logic Script -->
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const imageInput = document.getElementById('image-input');
+        const editorSection = document.getElementById('editor-section');
+        const previewImg = document.getElementById('preview-img');
+        const formatSelect = document.getElementById('format-select');
+        const qualityRange = document.getElementById('quality-range');
+        const qualityVal = document.getElementById('quality-val');
+        const widthInput = document.getElementById('width-input');
+        const heightInput = document.getElementById('height-input');
+        const fileNameText = document.getElementById('file-name');
+        const originalSizeText = document.getElementById('original-size');
+        const newSizeText = document.getElementById('new-size');
+        const downloadBtn = document.getElementById('download-btn');
+
+        let rawImage = new Image();
+        let originalFile = null;
+        let originalAspectRatio = 1;
+
+        // Trigger file select
+        dropZone.addEventListener('click', () => imageInput.click());
+
+        // File upload handling
+        imageInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('border-blue-500'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-blue-500'));
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('border-blue-500');
+            if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+        });
+
+        function handleFile(file) {
+            if (!file || !file.type.startsWith('image/')) return;
+            originalFile = file;
+            fileNameText.textContent = file.name;
+            originalSizeText.textContent = formatBytes(file.size);
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                rawImage.src = e.target.result;
+                rawImage.onload = () => {
+                    originalAspectRatio = rawImage.width / rawImage.height;
+                    widthInput.value = rawImage.width;
+                    heightInput.value = rawImage.height;
+                    editorSection.classList.remove('hidden');
+                    processImage();
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Maintain aspect ratio logic
+        widthInput.addEventListener('input', () => {
+            if (widthInput.value) heightInput.value = Math.round(widthInput.value / originalAspectRatio);
+            processImage();
+        });
+        heightInput.addEventListener('input', () => {
+            if (heightInput.value) widthInput.value = Math.round(heightInput.value * originalAspectRatio);
+            processImage();
+        });
+
+        qualityRange.addEventListener('input', () => {
+            qualityVal.textContent = qualityRange.value + '%';
+            processImage();
+        });
+        formatSelect.addEventListener('change', processImage);
+
+        // Canvas conversion core logic
+        function processImage() {
+            if (!rawImage.src) return;
+
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            const targetWidth = parseInt(widthInput.value) || rawImage.width;
+            const targetHeight = parseInt(heightInput.value) || rawImage.height;
+
+            canvas.width = targetWidth;
+            canvas.height = targetHeight;
+
+            ctx.drawImage(rawImage, 0, 0, targetWidth, targetHeight);
+
+            const format = formatSelect.value;
+            const quality = parseFloat(qualityRange.value) / 100;
+
+            canvas.toBlob((blob) => {
+                if (!blob) return;
+                const convertedUrl = URL.createObjectURL(blob);
+                previewImg.src = convertedUrl;
+                newSizeText.textContent = formatBytes(blob.size);
+
+                // Set download link
+                downloadBtn.href = convertedUrl;
+                const extension = format.split('/')[1];
+                const baseName = originalFile.name.substring(0, originalFile.name.lastIndexOf('.'));
+                downloadBtn.download = `${baseName}-converted.${extension}`;
+            }, format, quality);
+        }
+
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+    </script>
+</body>
+  </html>
+  
